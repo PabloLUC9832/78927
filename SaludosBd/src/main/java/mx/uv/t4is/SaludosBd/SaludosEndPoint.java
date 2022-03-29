@@ -31,7 +31,7 @@ public class SaludosEndPoint {
     @ResponsePayload
     public SaludarResponse Saludar(@RequestPayload SaludarRequest nombre) {
         SaludarResponse respuesta = new SaludarResponse();
-        //Agreagar el saludo a una base de datos
+        //Agregar el saludo a una base de datos
         respuesta.setRespuesta("Hola "+nombre.getNombre());
         Saludadores e = new Saludadores();
         e.setNombre(nombre.getNombre());
@@ -43,12 +43,17 @@ public class SaludosEndPoint {
     @ResponsePayload
     public BuscarSaludosResponse buscarSaludos(){
         BuscarSaludosResponse respuesta = new BuscarSaludosResponse();
+        
+        Saludadores e = new Saludadores();
+        //e.setId(respuesta.getSaludos());
 /*         for (Saludo saludo : saludos) {
             BuscarSaludosResponse.Saludos saludosBuscar = new BuscarSaludosResponse.Saludos();
             saludosBuscar.setId(saludo.getId());
             saludosBuscar.setNombre(saludo.getNombre());
             respuesta.getSaludos().add(saludosBuscar);
         } */
+        isaludadores.findAll();
+        respuesta.getSaludos();
         return respuesta;
     }
 
