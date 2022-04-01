@@ -1,0 +1,11 @@
+from ubuntu
+workdir /tareasmatadoras
+expose 8080
+cmd ["/tareasmatadoras/mvnw","spring-boot:run"]
+run apt-get update && apt-get install -y \
+openjdk-8-jdk \
+curl \
+nano \
+unzip
+run curl -G https://start.spring.io/starter.zip -d dependencies=web-services -d javaVersion=8 -o demo.zip
+run unzip demo.zip
