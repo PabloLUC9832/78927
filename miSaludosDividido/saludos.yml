@@ -1,0 +1,98 @@
+version: '3.3'
+services:
+  
+  saludar:
+    image: rrojano/jdk8
+    volumes:
+      - ./SaludosDividido:/app
+    ports:
+      - 8080:8080
+    command: ["java","-jar","/app/Saludar-0.0.1-SNAPSHOT.jar"]
+    networks:
+      - mired
+    environment:
+      MYSQL_HOST: db
+    depends_on:
+      - db
+    links:
+      - db
+    restart: always
+  
+  modificar:
+    image: rrojano/jdk8
+    volumes:
+      - ./SaludosDividido:/app
+    ports:
+      - 8081:8080
+    command: ["java","-jar","/app/ModificarSaludo-0.0.1-SNAPSHOT.jar"]
+    networks:
+      - mired
+    environment:
+      MYSQL_HOST: db
+    depends_on:
+      - db
+    links:
+      - db
+    restart: always    
+
+  borrar:
+    image: rrojano/jdk8
+    volumes:
+      - ./SaludosDividido:/app
+    ports:
+      - 8082:8080
+    command: ["java","-jar","/app/BorrarSaludo-0.0.1-SNAPSHOT.jar"]
+    networks:
+     - mired
+    environment:
+      MYSQL_HOST: db
+    depends_on:
+      - db
+    links:
+      - db
+    restart: always
+
+  buscar: 
+    image: rrojano/jdk8
+    volumes:
+      - ./SaludosDividido:/app
+    ports:
+      - 8083:8080
+    command: ["java","-jar","/app/BuscarSaludos-0.0.1-SNAPSHOT.jar"]
+    networks:
+      - mired       
+    environment:
+      MYSQL_HOST: db
+    depends_on:
+      - db
+    links:
+      - db
+    restart: always    
+
+  db:
+    image: mariadb
+    networks:
+      - mired
+    environment: 
+      MARIADB_ROOT_PASSWORD: 123456
+    volumes:
+      - ./bd.sql:/docker-entrypoint-initdb.d/bd.sql
+       
+  proxy:
+    image: nginx
+    volumes: 
+    - ./proxy.conf:/etc/nginx/conf.d/default.conf
+    ports:
+    - 8084:8080
+    networks:
+      - mired
+    environment:
+      MYSQL_HOST: db
+    depends_on:
+      - db
+    links:
+      - db
+    restart: always
+        
+networks:
+  mired:
