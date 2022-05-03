@@ -19,6 +19,7 @@
 - /saludarme1?nombre=algo
 - /saludarme2
 - /saludarme2?nombre=algo
+- /saludarHtml
 
 
 
